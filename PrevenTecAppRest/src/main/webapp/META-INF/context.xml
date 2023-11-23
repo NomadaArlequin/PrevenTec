@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context path=""/>
+<Context antiJARLocking="true"  path=""> 
+    
+    <Resource name="jdbc/pgpool_prevent_tec" auth="Container"
+              type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
+              url="jdbc:postgresql://localhost:5433/dbPrevenTec"
+              username="postgres" password="root"
+              initialSize="10"
+              maxActive="70"
+              minIdle="10"
+              maxIdle="50"
+              maxWait="2000"
+              suspectTimeout="60"
+              removeAbandoned="true"
+              logAbandoned="true"
+              timeBetweenEvictionRunsMillis="5000"
+              numTestsPerEvictionRun="5"
+              minEvictableIdleTimeMillis="1000"
+              testWhileIdle="false"
+    /> 
+    <!--<Context path=""/>-->
+   
+</Context>

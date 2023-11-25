@@ -8,6 +8,8 @@
 
 
         <script type="text/javascript">
+            var varOptSintoma = funGetOptEnfermedad();
+
             $(document).ready(function () {
                 $('#MantenimientoTablaContenidos').jtable({
                     title: 'Matenimiento',
@@ -29,6 +31,97 @@
                         }
                     },
                     fields: {
+                        Emfermedad_sintomas: {
+                            title: '',
+                            width: '3%',
+                            sorting: false,
+                            edit: false,
+                            create: false,
+                            display: function (DataHijo) {
+                                //Create an image that will be used to open child table
+                                var $img = $('<img class="divSvgimg" src="../assets/img/svg/mail-conf.svg" title="Edit Permisos" />');
+                                //Open child table when user clicks the image
+                                $img.click(function () {
+                                    $('#MantenimientoTablaContenidos').jtable('openChildTable',
+                                            $img.closest('tr'), //Parent row
+                                            {
+                                                title: ' Sintomas',
+                                                actions: {
+                                                    listAction: function (postData, jtParams) {
+                                                        let enfermedad_id = DataHijo.record.id;
+                                                        return funListJtChildren(postData, jtParams, enfermedad_id);
+                                                    },
+                                                    createAction: function (postData, jtParams) {
+                                                        let enfermedad_id = DataHijo.record.id;
+                                                        return funInsertJtChildren(postData, jtParams, enfermedad_id);
+                                                    },
+                                                    updateAction: function (postData, jtParams) {
+                                                        let enfermedad_id = DataHijo.record.id;
+                                                        return funUpdateJtChildren(postData, jtParams,enfermedad_id);
+                                                    },
+                                                    deleteAction: function (postData, jtParams) {
+                                                        return funDeleteJtChildren(postData, jtParams);
+                                                    }
+                                                },
+                                                fields: {
+                                                    id: {
+                                                        title: 'Id',
+                                                        width: '7%',
+                                                        key: true,
+                                                        create: false,
+                                                        list: false,
+                                                        edit: false,
+                                                        inputClass: 'form-control  jtMetInput clsMetNumero '
+                                                    },
+                                                    sintoma_id: {
+                                                        title: 'Sintoma_id',
+                                                        width: '7%',
+                                                        options: varOptSintoma.Records,
+                                                        create: true,
+                                                        list: true,
+                                                        edit: true,
+                                                        inputClass: 'form-control  jtMetSelect clsMetNumero '
+                                                    },
+                                                    descripcion: {
+                                                        title: 'Descripcion',
+                                                        width: '7%',
+                                                        create: true,
+                                                        list: true,
+                                                        edit: true,
+                                                        inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
+                                                    },
+                                                    estado: {
+                                                        title: 'Estado',
+                                                        width: '7%',
+                                                        type: 'checkbox',
+                                                        values: {'false': 'INACTIVO', 'true': 'ACTIVO'}, display: function (data) {
+                                                            var estado = "";
+                                                            if (data.record.estado === true)
+                                                                estado = "checked";
+                                                            else
+                                                                estado = "";
+                                                            return '<input type="checkbox"  onclick="return false" ' + estado + '>';
+                                                        },
+                                                        create: true,
+                                                        list: true,
+                                                        edit: true,
+                                                        inputClass: 'jtMetCheckbox '
+                                                    }
+                                                },
+                                                formCreated: function (event, data) {
+
+                                                },
+                                                recordsLoaded: function (event, data) {
+                                                }
+                                            }, function (data) { //opened handler
+                                        data.childTable.jtable('load');
+                                    });
+                                });
+                                //Return image to show on the person row
+                                return $img;
+                            }
+
+                        },
                         id: {
                             title: 'Id',
                             width: '7%',
@@ -75,12 +168,11 @@
                     formSubmitting: function (event, data) {
                         $('input[type="text"]').each(function (index, value) {
                             $(value).val($(value).val().toUpperCase());
-                        });                        
+                        });
                         return data.form.validationEngine('validate');
                     },
                     formCreated: function (event, data) {
                         data.form.validationEngine();
-
                     },
                     recordsLoaded: function (event, data) {
                     },
@@ -113,10 +205,7 @@
                     }
                 });
                 $('#MantenimientoTablaContenidos').jtable('load');
-
-
             });
-
             function funListJt(postData, jtParams) {
                 let letReturn = [];
                 $.ajax({
@@ -127,7 +216,6 @@
                     success: function (data) {
                         var varJson = JSON.parse(data);
                         letReturn = varJson;
-
                     }
                 });
                 return letReturn;
@@ -145,7 +233,6 @@
                         letReturn = varJson;
                     }
                 });
-
                 return letReturn;
             }
 
@@ -161,7 +248,6 @@
                         letReturn = varJson;
                     }
                 });
-
                 return letReturn;
             }
 
@@ -177,7 +263,84 @@
                         letReturn = varJson;
                     }
                 });
+                return letReturn;
+            }
 
+            ///*************************************************
+            function funListJtChildren(postData, jtParams, enfermedad_id) {
+                let letReturn = [];
+                $.ajax({
+                    type: "GET",
+                    url: conGloURL + '/Enfermedad?enfermedad_id=' + enfermedad_id,
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
+                return letReturn;
+            }
+
+            function funInsertJtChildren(postData, jtParams, enfermedad_id) {
+                let letReturn = [];
+                $.ajax({
+                    type: "POST",
+                    url: conGloURL + '/Enfermedad?' + jtParams + '&enfermedad_id=' + enfermedad_id,
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
+                return letReturn;
+            }
+
+            function funUpdateJtChildren(postData, jtParams) {
+                let letReturn = [];
+                $.ajax({
+                    type: "PUT",
+                    url: conGloURL + '/Enfermedad?' + jtParams + '&enfermedad_id=' + enfermedad_id,
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
+                return letReturn;
+            }
+
+            function funDeleteJtChildren(postData, jtParams) {
+                let letReturn = [];
+                $.ajax({
+                    type: "DELETE",
+                    url: conGloURL + '/Enfermedad?' + jtParams,
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
+                return letReturn;
+            }
+
+            function funGetOptEnfermedad() {
+                //srvTm_tipo_acreditacion
+                let postData = "";
+                let letReturn = [];
+                $.ajax({
+                    type: "GET",
+                    url: conGloURL + '/Sintoma/getOption/',
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
                 return letReturn;
             }
         </script>

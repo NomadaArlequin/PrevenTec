@@ -46,7 +46,7 @@ public class clsHistorial_sintomasDao{
                 varJsonObjectRegistro.put("historial_clinico_id", varResultado.getString("historial_clinico_id"));
                 varJsonObjectRegistro.put("sintoma_id", varResultado.getString("sintoma_id"));
                 varJsonObjectRegistro.put("validado", varResultado.getString("validado"));
-                varJsonObjectRegistro.put("estado", varResultado.getString("estado"));
+                varJsonObjectRegistro.put("estado", varResultado.getBoolean("estado"));
                 varJsonObjectRegistro.put("usucreacion", varResultado.getString("usucreacion"));
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
@@ -108,7 +108,7 @@ public class clsHistorial_sintomasDao{
                 varJsonObjectRegistro.put("historial_clinico_id", varResultado.getString("historial_clinico_id"));
                 varJsonObjectRegistro.put("sintoma_id", varResultado.getString("sintoma_id"));
                 varJsonObjectRegistro.put("validado", varResultado.getString("validado"));
-                varJsonObjectRegistro.put("estado", varResultado.getString("estado"));
+                varJsonObjectRegistro.put("estado", varResultado.getBoolean("estado"));
                 varJsonObjectRegistro.put("usucreacion", varResultado.getString("usucreacion"));
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));

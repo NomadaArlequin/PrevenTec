@@ -1,0 +1,121 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23-nov-2023, 17:11:35
+    Author     : Windows
+*/
+
+
+.btn.btn-primary {
+    color: #FFFFFF;
+    border-color: #7239EA;
+    background-color: #3093cd;
+}
+
+.svgMediano{
+    width: 30px;
+}
+
+ul.ui-autocomplete {
+    z-index: 1100;
+}
+
+.bg-dark {
+    --bs-bg-opacity: 1;
+    background-color: #3093cd !important;
+    border-radius: 0.475rem;
+    margin-top: 5px;
+}
+
+
+
+div.jtable-main-container>div.jtable-title {
+    background-color: #3093cd;
+    padding-left: 10px;
+}
+
+div.jtable-main-container>div.jtable-title div.jtable-toolbar span.jtable-toolbar-item {
+    background-color: #3093cd;
+    color: #fff;
+}
+
+div.jtable-main-container>table.jtable>thead {
+    background-color: #3093cd;
+}
+
+div.jtable-main-container>div.jtable-bottom-panel {
+    background-color: #3794ca;
+    color: #fff;
+    min-height: 22.900000000000002px;
+    font-size: 13px;
+    border: 1px solid #3093cd;
+    border-top: none;
+}
+
+
+
+.ui-widget-header {
+    background:  #3093cd;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: 1px solid #3794ca;
+    background: #3794ca;
+    font-weight: bold;
+    color: #ffffff;
+    border-radius: 0.475rem;
+    padding-top:0.375rem;
+    padding-bottom: 0.375rem;
+
+}
+
+
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+
+.divSvgimg{
+    width: 28px;
+}
+
+div.jtable-main-container>table.jtable>tbody>tr.jtable-data-row>td>.jtable-edit-command-button {
+    background: url(../img/svg/edit.svg) no-repeat;
+    background-size: 20px;
+    width:20px;
+    height: 20px;
+    opacity: 4;
+}
+div.jtable-main-container>table.jtable>tbody>tr.jtable-data-row>td>.jtable-delete-command-button {
+    background: url(../img/svg/delete.svg) no-repeat;
+    background-size: 20px;
+    width:20px;
+    height: 20px;
+    opacity: 4;
+}
+
+.divEditar {
+    background: url(../assetsNew/img/svg/edit.svg) no-repeat;
+    background-size: 20px;
+    width:20px;
+    opacity: 4;
+}
+.divEliminar {
+    background: url(../assetsNew/img/svg/delete.svg) no-repeat;
+    background-size: 20px;
+    width:20px;
+    opacity: 4;
+}
+
+.clsMetCapital {
+    text-transform:uppercase;
+}
+
+.row {
+    margin-bottom: 6px;
+}

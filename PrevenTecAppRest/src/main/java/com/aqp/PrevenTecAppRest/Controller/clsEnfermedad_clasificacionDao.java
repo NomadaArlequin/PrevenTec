@@ -47,7 +47,7 @@ public class clsEnfermedad_clasificacionDao{
                 varJsonObjectRegistro.put("clasificacion_id", varResultado.getString("clasificacion_id"));
                 varJsonObjectRegistro.put("enfermedad_id", varResultado.getString("enfermedad_id"));
                 varJsonObjectRegistro.put("descripcion", varResultado.getString("descripcion"));
-                varJsonObjectRegistro.put("estado", varResultado.getString("estado"));
+                varJsonObjectRegistro.put("estado", varResultado.getBoolean("estado"));
                 varJsonObjectRegistro.put("usucreacion", varResultado.getString("usucreacion"));
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
@@ -109,7 +109,7 @@ public class clsEnfermedad_clasificacionDao{
                 varJsonObjectRegistro.put("clasificacion_id", varResultado.getString("clasificacion_id"));
                 varJsonObjectRegistro.put("enfermedad_id", varResultado.getString("enfermedad_id"));
                 varJsonObjectRegistro.put("descripcion", varResultado.getString("descripcion"));
-                varJsonObjectRegistro.put("estado", varResultado.getString("estado"));
+                varJsonObjectRegistro.put("estado", varResultado.getBoolean("estado"));
                 varJsonObjectRegistro.put("usucreacion", varResultado.getString("usucreacion"));
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));

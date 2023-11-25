@@ -1,0 +1,142 @@
+<link  href="<%= request.getContextPath()%>/assets/css/menu.css" rel="stylesheet">
+
+<script>
+    var varGloUrlActual = window.location.href;
+    var varGloPermisos = [];
+    var varGloURLPath = <%out.print("\"" + request.getContextPath() + "\"");%>;
+    var vardropdown = '';
+
+    const mobileScreen = window.matchMedia("(max-width: 990px )");
+    $(document).ready(function () {
+        $(".dashboard-nav-dropdown-toggle").click(function () {
+            $(this).closest(".dashboard-nav-dropdown")
+                    .toggleClass("show")
+                    .find(".dashboard-nav-dropdown")
+                    .removeClass("show");
+            $(this).parent()
+                    .siblings()
+                    .removeClass("show");
+        });
+        $(".menu-toggle").click(function () {
+            if (mobileScreen.matches) {
+                $(".dashboard-nav").toggleClass("mobile-show");
+            } else {
+                $(".dashboard").toggleClass("dashboard-compact");
+            }
+        });
+    });
+    $(document).ready(function () {
+        var varUsuario = "hola";
+
+        $('#divGloMenuUsuario').html(varUsuario.toUpperCase());
+        $('#divLoader').hide();
+        //funGloPermiso();
+    });
+
+
+    function funGloPermiso() {}
+    function funGloPermiso1() {
+        var varSin = true;
+        if (varGloUrlActual.search('main.jsp') !== -1) {
+            //no hacemos nada si es el menu actual
+        } else {
+            $.each(varGloPermisos, function (index, value) {
+                var varid = value.id;
+                var varidpadre = value.idpadre;
+                var varruta = value.ruta;
+                var varnombre = value.nombre;
+                var vardescripcion = value.descripcion;
+                var varicono = value.icono.trim();
+                var vartipo = value.tipo;
+                var img = "";
+                if (varGloUrlActual.search(varruta) !== -1) {
+                    varSin = false;
+                    return false;
+                }
+            });
+            if (varSin) {
+                window.location.href = varGloURLPath + "/main.jsp";
+            }
+        }
+    }
+    function funGloCloseSession() {
+
+        $.ajax({
+            type: "POST",
+            url: varGloURLPath + '/srvLogin',
+            async: false,
+            data: {
+                varPostAccion: "closeSession"
+            },
+            success: function (data) {
+                var varJson = JSON.parse(data);
+                if (varJson.Result === 'OK') {
+                    window.location.href = varGloURLPath + "/main.jsp";
+                } else {
+                    alert(varJson.Message);
+                }
+            }
+        });
+
+
+    }
+
+
+</script>
+<div class="bd-example">
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <div class="container-fluid menu">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">                
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">           
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="ulMenuGlo">
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mantenimiento
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            
+                            
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Clasificacion.jsp">Clasificacion</a></li>                            
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Enfermedad.jsp">Enfermedad</a></li>                            
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Persona.jsp">Persona</a></li>
+
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Sintoma.jsp">Sintoma</a></li>                            
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Tipodocumento.jsp">Tipodocumento</a></li>                            
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Usuario.jsp">Usuario</a></li>
+                            
+
+                        </ul>
+                    </li>                    
+                    
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Procesos
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Procesos/Cuestionario.jsp">Cuestionario</a></li>
+                        </ul>
+                    </li>                                        
+
+                </ul>
+                <button class="btn btn-outline-primary text-white" type="submit" onclick="funGloCloseSession();">CERRAR</button>       
+            </div>
+        </div>
+        <br>
+        <div class="divMenuVariables" id="divGloMenuUsuario"></div>
+    </nav>    
+
+</div>
+<div id="divLoader" >
+    <div id="divGloMenu">
+
+
+    </div>    
+    <div class="loader"></div>
+</div>
+<br>

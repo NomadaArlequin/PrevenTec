@@ -1,0 +1,84 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 23-nov-2023, 17:36:41
+    Author     : Windows
+*/
+
+.divMenuVariables{
+    color: red;
+    font-size: 15px;
+    margin: 0px;
+    font-family: cursive;
+    float:left;
+    margin-left: 25px;
+    width: 100%
+
+}
+.navbar-expand-lg {
+    flex-wrap: wrap;
+}
+
+@media (max-width: 550px)
+.navbar-expand-lg {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+}
+/*
+navbar-collapse{
+    height: 25px;
+    margin-top: 10px;
+
+}
+
+.navbar-expand-lg {
+    flex-wrap: wrap;
+}*/
+
+
+
+.bg-light {
+    --bs-bg-opacity: 1;
+    background-color: #3093cd!important;
+}
+
+
+
+
+.loader {
+    position: fixed;
+
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#divLoader{
+    position: fixed;
+    border: 1px solid #333333;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    z-index: 999;
+}
+

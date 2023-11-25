@@ -32,7 +32,8 @@ public class clsSintomaDao{
         JSONObject varJsonObjectRegistro = new JSONObject();
 
         try {
-            String varSql = "SELECT  x.id, x.nombre, x.descripcion, x.estado, x.usucreacion, x.feccreacion, x.usumodificacion, x.fecmodificacion FROM sk_general.sintoma as x;";
+            String varSql = "SELECT  x.id, x.nombre, x.descripcion, x.estado, x.usucreacion, x.feccreacion, x.usumodificacion, "
+                    + "x.fecmodificacion FROM sk_general.sintoma as x order by x.id;";
 
             varConexion = varClsConexion.getConexion();
 
@@ -44,7 +45,7 @@ public class clsSintomaDao{
                 varJsonObjectRegistro.put("id", varResultado.getString("id"));
                 varJsonObjectRegistro.put("nombre", varResultado.getString("nombre"));
                 varJsonObjectRegistro.put("descripcion", varResultado.getString("descripcion"));
-                varJsonObjectRegistro.put("estado", varResultado.getString("estado"));
+                varJsonObjectRegistro.put("estado", varResultado.getBoolean("estado"));
                 varJsonObjectRegistro.put("usucreacion", varResultado.getString("usucreacion"));
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
@@ -104,7 +105,7 @@ public class clsSintomaDao{
                 varJsonObjectRegistro.put("id", varResultado.getString("id"));
                 varJsonObjectRegistro.put("nombre", varResultado.getString("nombre"));
                 varJsonObjectRegistro.put("descripcion", varResultado.getString("descripcion"));
-                varJsonObjectRegistro.put("estado", varResultado.getString("estado"));
+                varJsonObjectRegistro.put("estado", varResultado.getBoolean("estado"));
                 varJsonObjectRegistro.put("usucreacion", varResultado.getString("usucreacion"));
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));

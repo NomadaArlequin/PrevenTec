@@ -380,7 +380,7 @@ public class clsHistorial_clinicoDao {
             varPst.setString(10, varPersona.getTelefono());
             varPst.setInt(11, varPersona.getSexo_id());
             varPst.setString(12, varPersona.getObservacion());
-            varPst.setString(13, clsSuper.metDateSqlString( varPersona.getFecnacimiento()));
+            varPst.setString(13, clsSuper.metDateSqlString(varPersona.getFecnacimiento()));
             varPst.setString(14, varHistorial.getLongitud());
             varPst.setString(15, varHistorial.getLatitud());
             varPst.setString(16, varHistorial.getDescripcion());
@@ -392,7 +392,7 @@ public class clsHistorial_clinicoDao {
 
             int varRespuesta = 0;
             String varMensajeError = "";
-            Long varCodigo=null;
+            Long varCodigo = null;
             while (varResultado.next()) {
                 varRespuesta = varResultado.getInt("resultado");
                 varMensajeError = varResultado.getString("mensaje");
@@ -401,7 +401,7 @@ public class clsHistorial_clinicoDao {
             }
 
             if (varRespuesta != 0) {
-                varJsonObjectResultado.put("Result", "OK");                
+                varJsonObjectResultado.put("Result", "OK");
                 varJsonObjectResultado.put("codigo", varCodigo);
             } else {
                 varJsonObjectResultado.put("Result", "ERROR");
@@ -413,6 +413,122 @@ public class clsHistorial_clinicoDao {
             varJsonObjectResultado.put("Message", e);
             varJsonObjectResultado.put("numError", "-3");
             e.printStackTrace();
+        } finally {
+            if (varConexion != null) {
+                varConexion.close();
+            }
+            if (varResultado != null) {
+                varResultado.close();
+            }
+            if (varPst != null) {
+                varPst.close();
+            }
+        }
+        return varJsonObjectResultado;
+    }
+
+    public JSONObject save_Enfermedades(Integer varUsuario, String Json, Long varHistorial) throws SQLException {
+
+        Connection varConexion = null;
+        ResultSet varResultado = null;
+        PreparedStatement varPst = null;
+
+        JSONArray varJsonArrayP = new JSONArray();
+        JSONObject varJsonObjectResultado = new JSONObject();
+        JSONObject varJsonObjectRegistro = new JSONObject();
+
+        try {
+            String varSql = "SELECT resultado , mensaje  , codigo  from sk_general.pro_registrar_historial_enfermedad"
+                    + " ( ?,?,?::json "
+                    + ");";
+
+            varConexion = varClsConexion.getConexion();
+
+            varPst = varConexion.prepareStatement(varSql);
+
+            varPst.setInt(1, varUsuario);
+            varPst.setLong(2, varHistorial);
+            varPst.setString(3, Json);
+
+            System.out.println("->" + varPst.toString());
+
+            varResultado = varPst.executeQuery();
+
+            int varRespuesta = 0;
+            String varMensajeError = "";
+            Long varCodigo = null;
+            while (varResultado.next()) {
+                varRespuesta = varResultado.getInt("resultado");
+                varMensajeError = varResultado.getString("mensaje");
+                varCodigo = varResultado.getLong("codigo");
+
+            }
+
+            if (varRespuesta != 0) {
+                varJsonObjectResultado.put("Result", "OK");
+                varJsonObjectResultado.put("codigo", varCodigo);
+            } else {
+                varJsonObjectResultado.put("Result", "ERROR");
+                varJsonObjectResultado.put("Message", varMensajeError);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            varJsonObjectResultado.put("Result", "ERROR");
+            varJsonObjectResultado.put("Message", e);
+            varJsonObjectResultado.put("numError", "-3");
+            e.printStackTrace();
+        } finally {
+            if (varConexion != null) {
+                varConexion.close();
+            }
+            if (varResultado != null) {
+                varResultado.close();
+            }
+            if (varPst != null) {
+                varPst.close();
+            }
+        }
+        return varJsonObjectResultado;
+    }
+
+    public JSONObject ListByHistorial(Long varId) throws SQLException {
+        Connection varConexion = null;
+        ResultSet varResultado = null;
+        PreparedStatement varPst = null;
+
+        JSONArray varJsonArrayP = new JSONArray();
+        JSONObject varJsonObjectResultado = new JSONObject();
+        JSONObject varJsonObjectRegistro = new JSONObject();
+
+        try {
+            String varSql = "SELECT e.nombre as enfermedad_nom,\n"
+                    + " he.probabilidad\n"
+                    + " from sk_general.enfermedad as e\n"
+                    + " inner join sk_general.historial_enfermedad as he ON he.enfermedad_id = e.id\n"
+                    + " where he.historial_clinico_id= ? \n"
+                    + " order by he.probabilidad\n"
+                    + ";";
+
+            varConexion = varClsConexion.getConexion();
+
+            varPst = varConexion.prepareStatement(varSql);
+            
+            varPst.setLong(1, varId);
+
+            varResultado = varPst.executeQuery();
+            while (varResultado.next()) {
+                varJsonObjectRegistro = new JSONObject();
+                varJsonObjectRegistro.put("enfermedad_nom", varResultado.getString("enfermedad_nom"));
+                varJsonObjectRegistro.put("probabilidad", varResultado.getString("probabilidad"));
+                varJsonArrayP.put(varJsonObjectRegistro);
+            }
+            varJsonObjectResultado.put("Result", "OK");
+            varJsonObjectResultado.put("TotalRecordCount", varJsonArrayP.toList().size());
+            varJsonObjectResultado.put("Records", varJsonArrayP);
+        } catch (Exception e) {
+            varJsonObjectResultado.put("Result", "ERROR");
+            varJsonObjectResultado.put("Message", e);
+            varJsonObjectResultado.put("numError", "-3");
         } finally {
             if (varConexion != null) {
                 varConexion.close();

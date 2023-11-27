@@ -69,6 +69,10 @@ public class appHistorial {
                 varJObjectEnfermedad=clsDiagnosticoEnfermedadesValles.datosProbables(codigo);
                 JSONArray varJsonDiagnostico= varJObjectEnfermedad.getJSONArray("Records");
                 
+                Historial_clinicoDao.save_Enfermedades(varSessionUsuCodigo,varJsonDiagnostico.toString(),codigo);     
+                
+                varJObject=Historial_clinicoDao.ListByHistorial(codigo);
+
             }
 
         } catch (Exception e) {

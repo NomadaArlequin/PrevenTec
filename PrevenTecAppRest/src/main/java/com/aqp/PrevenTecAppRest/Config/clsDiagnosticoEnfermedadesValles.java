@@ -64,10 +64,10 @@ public class clsDiagnosticoEnfermedadesValles {
             // Imprimir las probabilidades de las clases (enfermedades)
             for (int i = 0; i < probabilidades.length; i++) {
                 String enfermedad = data.classAttribute().value(i);
-                System.out.println("Probabilidad de " + enfermedad + ": " + probabilidades[i]);
+                //System.out.println("Probabilidad de " + enfermedad + ": " + probabilidades[i]);
                 varJsonObjectRegistro = new JSONObject();
                 varJsonObjectRegistro.put("enfermedad_id", enfermedad);
-                varJsonObjectRegistro.put("si_no", probabilidades[i]);
+                varJsonObjectRegistro.put("probabilidad", probabilidades[i]);
                 varJsonArrayP.put(varJsonObjectRegistro);
             }
             varJsonObjectResultado.put("Result", "OK");

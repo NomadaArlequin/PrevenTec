@@ -25,7 +25,7 @@ public class clsLoginDao {
         PreparedStatement varPst = null;
         Connection varConexion = null;
         try {
-            String varSql = "select  resultado, mensaje, codigo , nombre "
+            String varSql = "select  resultado, mensaje, codigo , nombre, persona_id "
                     + " from \n"
                     + "sk_persona.pro_login(?, ?);";
             varConexion = varClsConexion.getConexion();
@@ -37,19 +37,23 @@ public class clsLoginDao {
             String mensaje = "Error de conexion ";
             String codigo = "0";
             String nombre = "";
+            String persona_id = "";
             varResultado = varPst.executeQuery();
 
             if (varResultado.next()) {
                 resultado = varResultado.getInt("resultado");
                 mensaje = varResultado.getString("mensaje");
                 codigo = varResultado.getString("codigo");              
-                nombre = varResultado.getString("nombre");                              
+                nombre = varResultado.getString("nombre");     
+                persona_id = varResultado.getString("persona_id");                     
+                
             }
 
             if (resultado != 0) {
                 varJsonObjectResultado.put("Result", "OK");
                 varJsonObjectResultado.put("id", codigo);
-                varJsonObjectResultado.put("nombre", nombre);              
+                varJsonObjectResultado.put("nombre", nombre); 
+                varJsonObjectResultado.put("persona_id", persona_id);                                 
             } else {
                 varJsonObjectResultado.put("Result", "ERROR");
                 varJsonObjectResultado.put("Message", mensaje);

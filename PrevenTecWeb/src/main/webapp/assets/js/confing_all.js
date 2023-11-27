@@ -4,4 +4,4 @@
  */
 
 
-const conGloURL="http://localhost:8081/PrevenTecAppRest";
+const conGloURL="http://localhost:8080/PrevenTecAppRest";

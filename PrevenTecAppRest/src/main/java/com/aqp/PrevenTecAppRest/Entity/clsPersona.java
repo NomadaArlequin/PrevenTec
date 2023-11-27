@@ -18,6 +18,15 @@ public class clsPersona {
     private Boolean estado;
     private Integer usucreacion;
     private Integer usumodificacion;
+    private Integer sexo_id;
+
+    public Integer getSexo_id() {
+        return sexo_id;
+    }
+
+    public void setSexo_id(Integer sexo_id) {
+        this.sexo_id = sexo_id;
+    }
 
     public Long getId() {
         return id;

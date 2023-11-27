@@ -76,22 +76,21 @@ public class clsCrearArchivoARFF {
         } catch (Exception e) {
         }
     }
-    
+
     public void Crear() {
         try {
             // Creamos un objeto FileWriter para escribir en el archivo
             //FileWriter fileWriter = new FileWriter("enfermedades.arff");
-            
-            FileWriter fileWriter = new FileWriter(clsSuper.path()+ "archivo.arff");                        
+
+            FileWriter fileWriter = new FileWriter(clsSuper.path() + "archivo.arff");
 
             clsEnfermedadDao EnfermedadDao = new clsEnfermedadDao();
             JSONObject EnfermedadesList = EnfermedadDao.ListAll();
 
-
             // Escribimos la cabecera del archivo
             fileWriter.write("@relation enfermedades\n");
             String coma = "";
-            JSONArray EnfermedadRecords = EnfermedadesList.getJSONArray("Records");            
+            JSONArray EnfermedadRecords = EnfermedadesList.getJSONArray("Records");
 
             clsSintomaDao SintomaDao = new clsSintomaDao();
             JSONObject SintomaList = SintomaDao.ListAll();
@@ -102,10 +101,7 @@ public class clsCrearArchivoARFF {
                 String sintoma_id = childJSONObject.getString("id");
                 fileWriter.write("@attribute " + sintoma_id + " {si, no}\n");
             }
-            
-            
-            
-            
+
             ///Enfermedades
             String enfermedades = "@attribute enfermedad {";
             for (int i = 0; i < EnfermedadRecords.length(); i++) {
@@ -117,10 +113,7 @@ public class clsCrearArchivoARFF {
             enfermedades = enfermedades + "}\n";
             fileWriter.write(enfermedades);
             // end enfermedades            
-            
-            
-            
-            
+
             // Escribimos las instancias de datos
             fileWriter.write("@data\n");
 
@@ -132,26 +125,32 @@ public class clsCrearArchivoARFF {
             String nuevo = "";
 
             String enfermedad_sintoma = "";
+            String data = "";
+            int primero = 1;
             for (int i = 0; i < Enfermedad_sintomaRecords.length(); i++) {
                 JSONObject childJSONObject = Enfermedad_sintomaRecords.getJSONObject(i);
-                String data = childJSONObject.getString("enfermedad_id");
+
+                data = childJSONObject.getString("enfermedad_id");
                 String si_no = childJSONObject.getString("si_no");
                 old = nuevo;
-                nuevo=data;
+                nuevo = data;
 
                 if (!old.equals(nuevo)) {
+                    if (primero == 1) {
+                    } else {
 
-                    fileWriter.write(enfermedad_sintoma + "\n");
-                    coma = ",";
+                        fileWriter.write(enfermedad_sintoma + "," + data + "\n");
+                    }
+                    coma = "";
                     //enfermedad_sintoma="";
-                    enfermedad_sintoma = data + coma + si_no;
+                    enfermedad_sintoma = coma + si_no;
                     coma = ",";
                 } else {
                     enfermedad_sintoma = enfermedad_sintoma + coma + si_no;
                     //fileWriter.write(data",si,si,si,si,si\n");
                 }
             }
-            fileWriter.write(enfermedad_sintoma+"\n");
+            fileWriter.write(enfermedad_sintoma + "," + data + "\n");
 
             // Cerramos el archivo
             fileWriter.close();
@@ -159,7 +158,7 @@ public class clsCrearArchivoARFF {
         } catch (Exception e) {
         }
     }
-    
+
     /*
     public static void main(String[] args) {
         // Definir los atributos (síntomas y enfermedades)

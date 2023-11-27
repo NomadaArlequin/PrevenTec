@@ -3,7 +3,7 @@ package com.aqp.PrevenTecAppRest.Entity;
 import java.util.Date;
 
 public class clsUsuario {
-    
+
     private Integer id;
     private String tipodocumento_cod;
     private String documento;
@@ -18,6 +18,25 @@ public class clsUsuario {
     private Boolean estado;
     private Integer usucreacion;
     private Integer usumodificacion;
+    private String tipousuario_cod;
+
+    private Long persona_id;
+
+    public Long getPersona_id() {
+        return persona_id;
+    }
+
+    public void setPersona_id(Long persona_id) {
+        this.persona_id = persona_id;
+    }
+
+    public String getTipousuario_cod() {
+        return tipousuario_cod;
+    }
+
+    public void setTipousuario_cod(String tipousuario_cod) {
+        this.tipousuario_cod = tipousuario_cod;
+    }
 
     public Integer getId() {
         return id;
@@ -131,5 +150,4 @@ public class clsUsuario {
         this.usumodificacion = usumodificacion;
     }
 
-    
 }

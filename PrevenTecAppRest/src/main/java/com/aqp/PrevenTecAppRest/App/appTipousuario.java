@@ -4,6 +4,7 @@
  */
 package com.aqp.PrevenTecAppRest.App;
 
+
 import com.aqp.PrevenTecAppRest.Entity.*;
 import com.aqp.PrevenTecAppRest.Controller.*;
 import com.aqp.PrevenTecAppRest.Config.clsSuper;
@@ -23,16 +24,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/Persona")
-public class appPersona {
+@RequestMapping("/Tipousuario")
+public class appTipousuario {
+    
 
     @GetMapping
     public ResponseEntity<?> Select(HttpServletRequest varRequest, HttpServletResponse varResponse, HttpSession varSession) {
 
-        clsPersonaDao PersonaDao = new clsPersonaDao();
+        clsTipousuarioDao TipousuarioDao = new clsTipousuarioDao();
         JSONObject varJObject = new JSONObject();
         try {
-            varJObject = PersonaDao.ListAll();
+            varJObject = TipousuarioDao.ListAll();
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
@@ -44,12 +46,12 @@ public class appPersona {
     @GetMapping("/pag")
     public ResponseEntity<?> SelectPag(HttpServletRequest varRequest, HttpServletResponse varResponse, HttpSession varSession) {
 
-        clsPersonaDao PersonaDao = new clsPersonaDao();
+        clsTipousuarioDao TipousuarioDao = new clsTipousuarioDao();
         JSONObject varJObject = new JSONObject();
         try {
             Integer varJtStartIndex = Integer.parseInt(varRequest.getParameter("jtStartIndex").toString());
             Integer varJtPageSize = Integer.parseInt(varRequest.getParameter("jtPageSize").toString());
-            varJObject = PersonaDao.ListPag(varJtPageSize, varJtStartIndex);
+            varJObject = TipousuarioDao.ListPag(varJtPageSize, varJtStartIndex);
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
@@ -57,51 +59,31 @@ public class appPersona {
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
-    
 
-    @GetMapping("/Actual")
-    public ResponseEntity<?> SelectById(HttpServletRequest varRequest, HttpServletResponse varResponse, HttpSession varSession) {
+    @PostMapping
+    public ResponseEntity<?> Insert(HttpServletRequest varRequest, HttpServletResponse varResponse, HttpSession varSession) {
 
-        clsPersonaDao PersonaDao = new clsPersonaDao();
+        clsTipousuarioDao TipousuarioDao = new clsTipousuarioDao();
         JSONObject varJObject = new JSONObject();
         try {
-            String varId = (varSession.getAttribute("session_persona_id").toString());
-            
-            
-        //Integer varSessionUsuCodigo = Integer.parseInt(varSession.getAttribute("session_persona_id").toString());
-            System.out.println("Persona Usu Actual"+ varId);
-            varJObject = PersonaDao.ListId(varId);
+            varJObject = TipousuarioDao.save(objeto(varRequest, varSession));
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
             e.printStackTrace();
         }
-        return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
-    }    
-
-    @PostMapping
-    public ResponseEntity<?> Insert(HttpServletRequest varRequest, HttpServletResponse varResponse, HttpSession varSession) {
-
-        clsPersonaDao PersonaDao = new clsPersonaDao();
-        JSONObject varJObject = new JSONObject();
-        try {
-            varJObject = PersonaDao.save(objeto(varRequest, varSession));
-        } catch (Exception e) {
-            varJObject.put("Result", "ERROR");
-            varJObject.put("Message", "Error srv");
-            varJObject.put("numError", "-2");
-        }
+        
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
 
     @PutMapping
     public ResponseEntity<?> Update(HttpServletRequest varRequest, HttpServletResponse varResponse, HttpSession varSession) {
 
-        clsPersonaDao PersonaDao = new clsPersonaDao();
+        clsTipousuarioDao TipousuarioDao = new clsTipousuarioDao();
         JSONObject varJObject = new JSONObject();
         try {
-            varJObject = PersonaDao.update(objeto(varRequest, varSession));
+            varJObject = TipousuarioDao.update(objeto(varRequest, varSession));
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
@@ -112,10 +94,10 @@ public class appPersona {
 
     @DeleteMapping
     private ResponseEntity<?> Delete(HttpServletRequest varRequest, HttpServletResponse varResponse, HttpSession varSession) {
-        clsPersonaDao PersonaDao = new clsPersonaDao();
+        clsTipousuarioDao TipousuarioDao = new clsTipousuarioDao();
         JSONObject varJObject = new JSONObject();
         try {
-            varJObject = PersonaDao.delete(objeto(varRequest, varSession));
+            varJObject = TipousuarioDao.delete(objeto(varRequest, varSession));
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
@@ -124,23 +106,12 @@ public class appPersona {
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
 
-    private clsPersona objeto(HttpServletRequest varRequest, HttpSession varSession) {
-        Integer varSessionUsuCodigo = Integer.parseInt(varSession.getAttribute("session_usu_codigo").toString());
-        clsPersona varClass = new clsPersona();
-        varClass.setId(clsSuper.metLong(varRequest.getParameter("id")));
-        varClass.setTipodocumento_cod(varRequest.getParameter("tipodocumento_cod"));
-        varClass.setNumdocumento(varRequest.getParameter("numdocumento"));
+    private clsTipousuario objeto(HttpServletRequest varRequest, HttpSession varSession) {
+       Integer varSessionUsuCodigo = Integer.parseInt(varSession.getAttribute("session_usu_codigo").toString());
+        clsTipousuario varClass = new clsTipousuario();
+        varClass.setCodigo(varRequest.getParameter("codigo"));
         varClass.setNombre(varRequest.getParameter("nombre"));
-        varClass.setApepaterno(varRequest.getParameter("apepaterno"));
-        varClass.setApematerno(varRequest.getParameter("apematerno"));
-        varClass.setDireccion(varRequest.getParameter("direccion"));
-        varClass.setEmail(varRequest.getParameter("email"));
-        varClass.setTelefono(varRequest.getParameter("telefono"));
-        varClass.setObservacion(varRequest.getParameter("observacion"));
-        varClass.setFecnacimiento(clsSuper.metDateEscojer((varRequest.getParameter("fecnacimiento"))));
         varClass.setEstado(clsSuper.metBoolean(varRequest.getParameter("estado")));
-        varClass.setSexo_id(clsSuper.metInteger(varRequest.getParameter("sexo_id")));        
-        
         varClass.setUsucreacion(varSessionUsuCodigo);
         varClass.setUsumodificacion(varSessionUsuCodigo);
         return varClass;
@@ -148,16 +119,16 @@ public class appPersona {
 
     @GetMapping("/getOption")
     public ResponseEntity<?> metOptionsALL() {
-        clsPersonaDao PersonaDao = new clsPersonaDao();
+        clsTipousuarioDao TipousuarioDao = new clsTipousuarioDao();
         JSONObject varJObject = new JSONObject();
         try {
-            varJObject = PersonaDao.getOption();
+            varJObject = TipousuarioDao.getOption();
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
-    }
-
+    }    
+    
 }

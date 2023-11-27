@@ -271,7 +271,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "GET",
-                    url: conGloURL + '/Enfermedad?enfermedad_id=' + enfermedad_id,
+                    url: conGloURL + '/Enfermedad_sintoma?enfermedad_id=' + enfermedad_id,
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -286,7 +286,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "POST",
-                    url: conGloURL + '/Enfermedad?' + jtParams + '&enfermedad_id=' + enfermedad_id,
+                    url: conGloURL + '/Enfermedad_sintoma?' + jtParams + '&enfermedad_id=' + enfermedad_id,
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -301,7 +301,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "PUT",
-                    url: conGloURL + '/Enfermedad?' + jtParams + '&enfermedad_id=' + enfermedad_id,
+                    url: conGloURL + '/Enfermedad_sintoma?' + jtParams + '&enfermedad_id=' + enfermedad_id,
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -316,7 +316,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "DELETE",
-                    url: conGloURL + '/Enfermedad?' + jtParams,
+                    url: conGloURL + '/Enfermedad_sintoma?' + jtParams,
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -343,12 +343,38 @@
                 });
                 return letReturn;
             }
+            
+
+        function ActualizarSintomasEnfermedades() {
+            var formData = new FormData();
+            fetch(conGloURL + '/login/Crear', {
+                method: 'POST',
+                body: formData
+            })
+                    .then(resp => resp.json())
+                    .then(data => {
+                        console.log(data.Result);
+                    })
+                    .catch(e => console.log(e));
+
+
+        }
+            
+            
         </script>
 
     </head>
     <body>
         <%@include file="../WEB-INF/jspf/Menu.jspf" %>
         <br>
+        <div class="container">
+             <div class="col-md-1">
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-dark" onclick="ActualizarSintomasEnfermedades()">Actualizar</button>    
+                    </div>             
+                </div>  
+        </div>
+        
         <div class="container table-responsive">
             <table class="table">
                 <tr>

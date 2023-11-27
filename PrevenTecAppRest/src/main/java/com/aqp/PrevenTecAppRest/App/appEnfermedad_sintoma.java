@@ -36,6 +36,7 @@ public class appEnfermedad_sintoma {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
+            e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
@@ -51,6 +52,7 @@ public class appEnfermedad_sintoma {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
+            e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
@@ -68,6 +70,7 @@ public class appEnfermedad_sintoma {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
+            e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
@@ -83,6 +86,7 @@ public class appEnfermedad_sintoma {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
+            e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
@@ -98,6 +102,7 @@ public class appEnfermedad_sintoma {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
+            e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
@@ -112,6 +117,7 @@ public class appEnfermedad_sintoma {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
+            e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }
@@ -139,6 +145,7 @@ public class appEnfermedad_sintoma {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");
             varJObject.put("numError", "-2");
+            e.printStackTrace();
         }
         return ResponseEntity.status(HttpStatus.OK).body(varJObject.toString());
     }

@@ -13,17 +13,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import com.aqp.PrevenTecAppRest.Config.clsSuper;
 import java.sql.SQLException;
-    
-public class clsSintomaDao{
-    
+
+public class clsSintomaDao {
+
     private clsConexion varClsConexion;
-    
-    public clsSintomaDao(){
-        varClsConexion=new clsConexion();
+
+    public clsSintomaDao() {
+        varClsConexion = new clsConexion();
     }
 
     public JSONObject ListAll() throws SQLException {
-        Connection varConexion = null;        
+        Connection varConexion = null;
         ResultSet varResultado = null;
         PreparedStatement varPst = null;
 
@@ -33,7 +33,7 @@ public class clsSintomaDao{
 
         try {
             String varSql = "SELECT  x.id, x.nombre, x.descripcion, x.estado, x.usucreacion, x.feccreacion, x.usumodificacion, "
-                    + "x.fecmodificacion FROM sk_general.sintoma as x order by x.id;";
+                    + "x.fecmodificacion, sintoma_padre FROM sk_general.sintoma as x order by x.id;";
 
             varConexion = varClsConexion.getConexion();
 
@@ -50,6 +50,7 @@ public class clsSintomaDao{
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
                 varJsonObjectRegistro.put("fecmodificacion", varResultado.getString("fecmodificacion"));
+                varJsonObjectRegistro.put("sintoma_padre", varResultado.getString("sintoma_padre"));
                 varJsonArrayP.put(varJsonObjectRegistro);
             }
             varJsonObjectResultado.put("Result", "OK");
@@ -72,8 +73,9 @@ public class clsSintomaDao{
         }
         return varJsonObjectResultado;
     }
+
     public JSONObject ListPag(int varJtpageSize, int varJtStarIndex) throws SQLException {
-        Connection varConexion = null;        
+        Connection varConexion = null;
         ResultSet varResultado = null;
         PreparedStatement varPst = null;
 
@@ -83,15 +85,16 @@ public class clsSintomaDao{
 
         try {
             String varSql = "SELECT  x.id "
-                             +", x.nombre "
-                             +", x.descripcion "
-                             +", x.estado "
-                             +", x.usucreacion "
-                             +", x.feccreacion "
-                             +", x.usumodificacion "
-                             +", x.fecmodificacion "
-                             +" FROM sk_general.sintoma as x "
-                             +" LIMIT ? OFFSET ? order by 2; ";
+                    + ", x.nombre "
+                    + ", x.descripcion "
+                    + ", x.estado "
+                    + ", x.usucreacion "
+                    + ", x.feccreacion "
+                    + ", x.usumodificacion "
+                    + ", x.fecmodificacion "
+                    + ", x.sintoma_padre "
+                    + " FROM sk_general.sintoma as x "
+                    + " LIMIT ? OFFSET ? order by 2; ";
 
             varConexion = varClsConexion.getConexion();
 
@@ -110,9 +113,11 @@ public class clsSintomaDao{
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
                 varJsonObjectRegistro.put("fecmodificacion", varResultado.getString("fecmodificacion"));
+                varJsonObjectRegistro.put("sintoma_padre", varResultado.getString("sintoma_padre"));
                 varJsonArrayP.put(varJsonObjectRegistro);
             }
-            Long varNumeroRegistros=Long.parseLong("0");            varSql = "select count(*) as contador  from sk_general.sintoma;";
+            Long varNumeroRegistros = Long.parseLong("0");
+            varSql = "select count(*) as contador  from sk_general.sintoma;";
 
             varPst = varConexion.prepareStatement(varSql);
             varResultado = varPst.executeQuery();
@@ -139,6 +144,7 @@ public class clsSintomaDao{
         }
         return varJsonObjectResultado;
     }
+
     public JSONObject save(clsSintoma varClass) throws SQLException {
 
         PreparedStatement varPst = null;
@@ -149,14 +155,16 @@ public class clsSintomaDao{
         JSONObject varJsonObjectRegistro = new JSONObject();
         try {
             varConexion = varClsConexion.getConexion();
-            String sql = "INSERT INTO  sk_general.sintoma (  nombre , descripcion , estado , usucreacion) values "
-                          +"( ? , ? , ? , ?)  RETURNING id  ; " 
-;            varPst = varConexion.prepareStatement(sql);
+            String sql = "INSERT INTO  sk_general.sintoma (  nombre , descripcion , estado , usucreacion, sintoma_padre) values "
+                    + "( ? , ? , ? , ?, ?)  RETURNING id  ; ";
+            varPst = varConexion.prepareStatement(sql);
 
-            varPst.setString(1, varClass.getNombre() );
-            varPst.setString(2, varClass.getDescripcion() );
-            varPst.setBoolean(3, varClass.getEstado() );
-            varPst.setInt(4, varClass.getUsucreacion() );
+            varPst.setString(1, varClass.getNombre());
+            varPst.setString(2, varClass.getDescripcion());
+            varPst.setBoolean(3, varClass.getEstado());
+            varPst.setInt(4, varClass.getUsucreacion());
+            varPst.setObject(5, varClass.getSintoma_padre(), java.sql.Types.INTEGER);            
+            
             varResultado = varPst.executeQuery();
             if (varResultado.next()) {
                 varJsonObjectRegistro.put("id", varResultado.getString("id"));
@@ -164,6 +172,7 @@ public class clsSintomaDao{
                 varJsonObjectRegistro.put("descripcion", varClass.getDescripcion());
                 varJsonObjectRegistro.put("estado", varClass.getEstado());
                 varJsonObjectRegistro.put("usucreacion", varClass.getUsucreacion());
+                varJsonObjectRegistro.put("sintoma_padre", varClass.getSintoma_padre());                
             }
             varJsonObjectResultado.put("Result", "OK");
             varJsonObjectResultado.put("Record", varJsonObjectRegistro);
@@ -186,6 +195,7 @@ public class clsSintomaDao{
         }
         return varJsonObjectResultado;
     }
+
     public JSONObject update(clsSintoma varClass) throws SQLException {
         Connection varConexion = null;
         PreparedStatement varPst = null;
@@ -199,16 +209,19 @@ public class clsSintomaDao{
                     + "descripcion = ? , "
                     + "estado = ? , "
                     + "usumodificacion = ? , "
+                    + "sintoma_padre = ? , "                    
                     + "fecmodificacion = now()  "
                     + "WHERE id = ? ; ";
 
             varConexion = varClsConexion.getConexion();
             varPst = varConexion.prepareStatement(sql);
-            varPst.setString(1, varClass.getNombre() );
-            varPst.setString(2, varClass.getDescripcion() );
-            varPst.setBoolean(3, varClass.getEstado() );
-            varPst.setInt(4, varClass.getUsumodificacion() );
-            varPst.setInt(5, varClass.getId() );
+            varPst.setString(1, varClass.getNombre());
+            varPst.setString(2, varClass.getDescripcion());
+            varPst.setBoolean(3, varClass.getEstado());
+            varPst.setInt(4, varClass.getUsumodificacion());
+            
+            varPst.setObject(5, varClass.getSintoma_padre(), java.sql.Types.INTEGER);                        
+            varPst.setInt(6, varClass.getId());
             varPst.executeUpdate();
 
             varJsonObjectRegistro.put("id", varClass.getId());
@@ -216,7 +229,8 @@ public class clsSintomaDao{
             varJsonObjectRegistro.put("descripcion", varClass.getDescripcion());
             varJsonObjectRegistro.put("estado", varClass.getEstado());
             varJsonObjectRegistro.put("usumodificacion", varClass.getUsumodificacion());
-
+            
+            varJsonObjectRegistro.put("sintoma_padre", varClass.getSintoma_padre());            
 
             varJsonArrayP.put(varJsonObjectRegistro);
 
@@ -237,13 +251,14 @@ public class clsSintomaDao{
 
         return varJsonObjectResultado;
     }
+
     public JSONObject delete(clsSintoma varClass) throws SQLException {
         Connection varConexion = null;
         JSONObject varJsonObjectResultado = new JSONObject();
         PreparedStatement varPst = null;
         try {
             String sql = "DELETE FROM sk_general.sintoma  WHERE id = ? ";
-            varConexion= varClsConexion.getConexion();
+            varConexion = varClsConexion.getConexion();
             varPst = varConexion.prepareStatement(sql);
             varPst.setInt(1, varClass.getId());
             varPst.executeUpdate();
@@ -262,6 +277,7 @@ public class clsSintomaDao{
         }
         return varJsonObjectResultado;
     }
+
     public JSONObject getOption() throws SQLException {
         Connection varConexion = null;
         JSONObject varJsonObjectP = new JSONObject();
@@ -271,15 +287,15 @@ public class clsSintomaDao{
         PreparedStatement varPst = null;
 
         varJsonObjectP.put("Value", "");
-        varJsonObjectP.put("DisplayText", "");        
-        varJsonArrayP.put(varJsonObjectP);        
+        varJsonObjectP.put("DisplayText", "");
+        varJsonArrayP.put(varJsonObjectP);
         try {
             String varSql = "SELECT \n"
                     + " x.id as Value,\n"
                     + " x.nombre as DisplayText\n"
                     + " FROM sk_general.sintoma AS x\n"
                     + " ORDER BY 2;";
-            varConexion= varClsConexion.getConexion();
+            varConexion = varClsConexion.getConexion();
             varPst = varConexion.prepareStatement(varSql);
 
             varResultado = varPst.executeQuery();
@@ -309,8 +325,8 @@ public class clsSintomaDao{
                 varResultado.close();
             }
         }
-        varJsonObjectResultado.put("Records", varJsonArrayP);        
+        varJsonObjectResultado.put("Records", varJsonArrayP);
 
         return varJsonObjectResultado;
-    }    
+    }
 }

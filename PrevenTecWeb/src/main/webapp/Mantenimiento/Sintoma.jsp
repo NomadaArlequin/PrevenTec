@@ -8,6 +8,8 @@
 
 
         <script type="text/javascript">
+            
+            var varOptSintoma = funGetOptSintoma();            
             $(document).ready(function () {
                 $('#MantenimientoTablaContenidos').jtable({
                     title: 'Matenimiento',
@@ -54,6 +56,17 @@
                             edit: true,
                             inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
                         },
+                        
+                        sintoma_padre: {
+                            title: 'Sintoma_padre',
+                            width: '7%',
+                            options: varOptSintoma.Records,
+                            create: true,
+                            list: true,
+                            edit: true,
+                            inputClass: 'form-select  jtMetSelect clsMetLeter clsMetCapital '
+                        },                        
+                        
                         estado: {
                             title: 'Estado',
                             width: '7%',
@@ -180,6 +193,25 @@
 
                 return letReturn;
             }
+            
+            function funGetOptSintoma() {
+                //srvTm_tipo_acreditacion
+                let postData = "";
+                let letReturn = [];
+                $.ajax({
+                    type: "GET",
+                    url: conGloURL + '/Sintoma/getOption/',
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
+
+                return letReturn;
+            }            
+            
         </script>
 
     </head>

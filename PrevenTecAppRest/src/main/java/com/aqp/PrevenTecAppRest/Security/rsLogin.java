@@ -39,6 +39,8 @@ public class rsLogin {
                 varJObject.put("Message", "WELCOME");
                 varSession.setAttribute("session_usu_codigo", id);
                 varSession.setAttribute("session_nombre", varJObject.getString("nombre"));
+                varSession.setAttribute("session_persona_id", varJObject.getString("persona_id"));  
+                System.out.println(varJObject.getString("persona_id"));
             }
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
@@ -94,7 +96,8 @@ public class rsLogin {
             if (varSession.getAttribute("session_usu_codigo") != null) {
                 varJObject.put("Result", "OK");
                 varJObject.put("session", varSession.getAttribute("session_usu_codigo"));
-                varJObject.put("session", varSession.getAttribute("session_usu_codigo"));
+                varJObject.put("session_nombre", varSession.getAttribute("session_nombre"));
+                varJObject.put("session_persona_id", varSession.getAttribute("session_persona_id"));                
             } else {
                 varJObject.put("Result", "ERROR");
                 varJObject.put("Message", "Se perdio su session");

@@ -3,7 +3,7 @@
     
     <Resource name="jdbc/pgpool_prevent_tec" auth="Container"
               type="javax.sql.DataSource" driverClassName="org.postgresql.Driver"
-              url="jdbc:postgresql://localhost:5433/dbPrevenTec"
+              url="jdbc:postgresql://localhost:5432/dbPrevenTec"
               username="postgres" password="root"
               initialSize="10"
               maxActive="70"

@@ -42,7 +42,7 @@
 <script>
 
     $(document).ready(function () {
-        //funGloValidarSession();
+        funGloValidarSession();
     });
 
     let varConURLPath = <%out.print("\"" + request.getContextPath() + "\"");%>;

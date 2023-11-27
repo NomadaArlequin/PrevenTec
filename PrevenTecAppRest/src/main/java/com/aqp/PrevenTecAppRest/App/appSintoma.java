@@ -109,6 +109,8 @@ public class appSintoma {
         varClass.setNombre(varRequest.getParameter("nombre"));
         varClass.setDescripcion(varRequest.getParameter("descripcion"));
         varClass.setEstado(clsSuper.metBoolean(varRequest.getParameter("estado")));
+        
+        varClass.setSintoma_padre(clsSuper.metInteger(varRequest.getParameter("sintoma_padre")));        
         varClass.setUsucreacion(varSessionUsuCodigo);
         varClass.setUsumodificacion(varSessionUsuCodigo);
         return varClass;

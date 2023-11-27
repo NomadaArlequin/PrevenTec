@@ -8,15 +8,19 @@
 
 
         <script type="text/javascript">
-            var varOptTipodocumento =funGetOptTipodocumento();
-            $(document).ready(function() {
+            var varOptTipodocumento = funGetOptTipodocumento();
+            var varOptTipousuario = funGetOptTipousuario();
+
+            var varOptPersona = funGetOptPersona();
+
+            $(document).ready(function () {
                 $('#MantenimientoTablaContenidos').jtable({
                     title: 'Matenimiento',
                     paging: false, //Enable paging
                     sorting: false, //Enable sorting
                     useBootstrap: true,
                     actions: {
-                         listAction: function (postData, jtParams) {
+                        listAction: function (postData, jtParams) {
                             return funListJt(postData, jtParams);
                         },
                         createAction: function (postData, jtParams) {
@@ -48,6 +52,26 @@
                             edit: true,
                             inputClass: 'form-select  jtMetInput clsMetLeter clsMetCapital '
                         },
+                        tipousuario_cod: {
+                            title: 'tipousuario_cod',
+                            width: '7%',
+                            options: varOptTipousuario.Records,
+                            create: true,
+                            list: true,
+                            edit: true,
+                            inputClass: 'form-select  jtMetInput clsMetLeter clsMetCapital '
+                        },
+
+                        persona_id: {
+                            title: 'persona',
+                            width: '7%',
+                            options: varOptPersona.Records,
+                            create: true,
+                            list: true,
+                            edit: true,
+                            inputClass: 'form-select  jtMetInput clsMetLeter clsMetCapital '
+                        },
+
                         documento: {
                             title: 'Documento',
                             width: '7%',
@@ -70,6 +94,7 @@
                             create: true,
                             list: true,
                             edit: true,
+                            type: 'password',
                             inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
                         },
                         nombre: {
@@ -124,12 +149,12 @@
                             title: 'Estado',
                             width: '7%',
                             type: 'checkbox',
-                            values: {'false': 'INACTIVO', 'true': 'ACTIVO'}, display: function(data) {
-                            var estado = "";
-                            if (data.record.estado === true)
-                                estado = "checked";
+                            values: {'false': 'INACTIVO', 'true': 'ACTIVO'}, display: function (data) {
+                                var estado = "";
+                                if (data.record.estado === true)
+                                    estado = "checked";
                                 else
-                                estado = "";
+                                    estado = "";
                                 return '<input type="checkbox"  onclick="return false" ' + estado + '>';
                             },
                             create: true,
@@ -139,19 +164,19 @@
                         }
                     },
                     formSubmitting: function (event, data) {
-                        $('input[type="text"]').each(function(index, value) {
+                        $('input[type="text"]').each(function (index, value) {
                             $(value).val($(value).val().toUpperCase());
-                        });                        
+                        });
                         return data.form.validationEngine('validate');
                     },
-                    formCreated: function(event, data) {
+                    formCreated: function (event, data) {
                         data.form.validationEngine();
 
                     },
-                    recordsLoaded: function(event, data) {
+                    recordsLoaded: function (event, data) {
                     },
                     //Dispose validation logic when form is closed
-                    formClosed: function(event, data) {
+                    formClosed: function (event, data) {
                         data.form.validationEngine('hide');
                         data.form.validationEngine('detach');
                     },
@@ -249,11 +274,11 @@
 
             function funGetOptTipodocumento() {
                 //srvTm_tipo_acreditacion
-                let postData="";                
+                let postData = "";
                 let letReturn = [];
                 $.ajax({
                     type: "GET",
-                    url: conGloURL + '/Tipodocumento/getOption/' ,
+                    url: conGloURL + '/Tipodocumento/getOption/',
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -264,6 +289,41 @@
 
                 return letReturn;
             }
+            function funGetOptTipousuario() {
+                //srvTm_tipo_acreditacion
+                let postData = "";
+                let letReturn = [];
+                $.ajax({
+                    type: "GET",
+                    url: conGloURL + '/Tipousuario/getOption/',
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
+
+                return letReturn;
+            }
+            
+            function funGetOptPersona() {
+                //srvTm_tipo_acreditacion
+                let postData = "";
+                let letReturn = [];
+                $.ajax({
+                    type: "GET",
+                    url: conGloURL + '/Persona/getOption/',
+                    async: false,
+                    data: postData,
+                    success: function (data) {
+                        var varJson = JSON.parse(data);
+                        letReturn = varJson;
+                    }
+                });
+
+                return letReturn;
+            }            
 
         </script>
 

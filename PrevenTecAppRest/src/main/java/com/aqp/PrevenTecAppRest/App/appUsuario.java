@@ -117,6 +117,10 @@ public class appUsuario {
         varClass.setTelefono(varRequest.getParameter("telefono"));
         varClass.setDireccion(varRequest.getParameter("direccion"));
         varClass.setEstado(clsSuper.metBoolean(varRequest.getParameter("estado")));
+        
+        varClass.setTipousuario_cod(varRequest.getParameter("tipousuario_cod"));        
+        varClass.setPersona_id(clsSuper.metLong(varRequest.getParameter("persona_id")));        
+        
         varClass.setUsucreacion(varSessionUsuCodigo);
         varClass.setUsumodificacion(varSessionUsuCodigo);
         return varClass;

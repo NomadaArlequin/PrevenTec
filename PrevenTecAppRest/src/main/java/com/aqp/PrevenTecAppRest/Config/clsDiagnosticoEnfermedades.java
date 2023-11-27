@@ -119,7 +119,7 @@ public class clsDiagnosticoEnfermedades {
     public static void datosProbables() {
         try {
             // Cargar el conjunto de datos desde un archivo ARFF
-            DataSource source = new DataSource(clsSuper.path()+ "datos.arff");
+            DataSource source = new DataSource(clsSuper.path()+ "archivo.arff");
             Instances data = source.getDataSet();
             data.setClassIndex(data.numAttributes() - 1);
 
@@ -150,7 +150,7 @@ public class clsDiagnosticoEnfermedades {
     public static void sindatos() {
         try {
             // Cargar el conjunto de datos desde un archivo ARFF
-            Instances data = new Instances(new java.io.BufferedReader(new java.io.FileReader(clsSuper.path()+ "datos.arff")));
+            Instances data = new Instances(new java.io.BufferedReader(new java.io.FileReader(clsSuper.path()+ "archivo.arff")));
             data.setClassIndex(data.numAttributes() - 1);
 
             // Instanciar y construir el clasificador (usando J48 como ejemplo)

@@ -8,10 +8,9 @@
 
 
         <script type="text/javascript">
-            var varOptTipodocumento = funGetOptTipodocumento();
             $(document).ready(function () {
                 $('#MantenimientoTablaContenidos').jtable({
-                    title: 'persona',
+                    title: 'Matenimiento',
                     paging: false, //Enable paging
                     sorting: false, //Enable sorting
                     useBootstrap: true,
@@ -30,30 +29,13 @@
                         }
                     },
                     fields: {
-                        id: {
-                            title: 'Id',
+                        codigo: {
+                            title: 'Codigo',
                             width: '7%',
                             key: true,
-                            create: false,
+                            create: true,
                             list: false,
                             edit: false,
-                            inputClass: 'form-control  jtMetInput clsMetNumero '
-                        },
-                        tipodocumento_cod: {
-                            title: 'Tipodocumento_cod',
-                            width: '7%',
-                            options: varOptTipodocumento.Records,
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-select  jtMetSelect clsMetLeter clsMetCapital '
-                        },
-                        numdocumento: {
-                            title: 'Numdocumento',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
                             inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
                         },
                         nombre: {
@@ -63,71 +45,6 @@
                             list: true,
                             edit: true,
                             inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
-                        },
-                        apepaterno: {
-                            title: 'Apepaterno',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
-                        },
-                        apematerno: {
-                            title: 'Apematerno',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
-                        },
-                        direccion: {
-                            title: 'Direccion',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
-                        },
-                        email: {
-                            title: 'Email',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
-                        },
-                        telefono: {
-                            title: 'Telefono',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
-                        },
-                        observacion: {
-                            title: 'Observacion',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-control  jtMetInput clsMetLeter clsMetCapital '
-                        },
-                        fecnacimiento: {
-                            title: 'Fecnacimiento',
-                            width: '7%',
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-control  jtMetInput '
-                        },
-                        sexo_id: {
-                            title: 'sexo_id',
-                            width: '7%',
-                            options: {'0':'FEMENINO','1':'MASCULINO'},
-                            create: true,
-                            list: true,
-                            edit: true,
-                            inputClass: 'form-select  jtMetSelect clsMetLeter clsMetCapital '
                         },
                         estado: {
                             title: 'Estado',
@@ -144,7 +61,7 @@
                             create: true,
                             list: true,
                             edit: true,
-                            inputClass: '  jtMetCheckbox '
+                            inputClass: 'jtMetCheckbox '
                         }
                     },
                     formSubmitting: function (event, data) {
@@ -196,7 +113,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "GET",
-                    url: conGloURL + '/Persona?',
+                    url: conGloURL + '/Tipousuario?',
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -212,7 +129,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "POST",
-                    url: conGloURL + '/Persona?' + jtParams,
+                    url: conGloURL + '/Tipousuario?' + jtParams,
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -228,7 +145,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "PUT",
-                    url: conGloURL + '/Persona?' + jtParams,
+                    url: conGloURL + '/Tipousuario?' + jtParams,
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -244,7 +161,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "DELETE",
-                    url: conGloURL + '/Persona?' + jtParams,
+                    url: conGloURL + '/Tipousuario?' + jtParams,
                     async: false,
                     data: postData,
                     success: function (data) {
@@ -255,25 +172,6 @@
 
                 return letReturn;
             }
-
-            function funGetOptTipodocumento() {
-                //srvTm_tipo_acreditacion
-                let postData = "";
-                let letReturn = [];
-                $.ajax({
-                    type: "GET",
-                    url: conGloURL + '/Tipodocumento/getOption/',
-                    async: false,
-                    data: postData,
-                    success: function (data) {
-                        var varJson = JSON.parse(data);
-                        letReturn = varJson;
-                    }
-                });
-
-                return letReturn;
-            }
-
         </script>
 
     </head>

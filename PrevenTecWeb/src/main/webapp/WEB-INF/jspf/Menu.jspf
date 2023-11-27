@@ -108,6 +108,8 @@
 
                             <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Sintoma.jsp">Sintoma</a></li>                            
                             <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Tipodocumento.jsp">Tipodocumento</a></li>                            
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Tipousuario.jsp">Tipousuario</a></li>                                                        
+                            
                             <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Mantenimiento/Usuario.jsp">Usuario</a></li>
                             
 
@@ -119,7 +121,7 @@
                             Procesos
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Procesos/Cuestionario.jsp">Cuestionario</a></li>
+                            <li><a class="dropdown-item" href="<%= request.getContextPath()%>/Procesos/RegistrarEnfermedad.jsp">Registrar Enfermedad</a></li>
                         </ul>
                     </li>                                        
 

@@ -32,7 +32,10 @@ public class clsPersonaDao {
         JSONObject varJsonObjectRegistro = new JSONObject();
 
         try {
-            String varSql = "SELECT  x.id, x.tipodocumento_cod, x.numdocumento, x.nombre, x.apepaterno, x.apematerno, x.direccion, x.email, x.telefono, x.observacion, x.fecnacimiento, x.estado, x.usucreacion, x.feccreacion, x.usumodificacion, x.fecmodificacion FROM sk_persona.persona as x;";
+            String varSql = "SELECT  x.id, x.tipodocumento_cod, x.numdocumento, x.nombre, x.apepaterno,"
+                    + " x.apematerno, x.direccion, x.email, x.telefono, x.observacion, x.fecnacimiento, "
+                    + " x.estado, x.usucreacion, x.feccreacion, x.usumodificacion, x.fecmodificacion, x.sexo_id "
+                    + " FROM sk_persona.persona as x;";
 
             varConexion = varClsConexion.getConexion();
 
@@ -57,6 +60,7 @@ public class clsPersonaDao {
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
                 varJsonObjectRegistro.put("fecmodificacion", varResultado.getString("fecmodificacion"));
+                varJsonObjectRegistro.put("sexo_id", varResultado.getString("sexo_id"));
                 varJsonArrayP.put(varJsonObjectRegistro);
             }
             varJsonObjectResultado.put("Result", "OK");
@@ -106,6 +110,7 @@ public class clsPersonaDao {
                     + ", x.feccreacion "
                     + ", x.usumodificacion "
                     + ", x.fecmodificacion "
+                    + ", x.sexo_id "
                     + " FROM sk_persona.persona as x "
                     + " LIMIT ? OFFSET ? order by 2; ";
 
@@ -134,6 +139,7 @@ public class clsPersonaDao {
                 varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
                 varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
                 varJsonObjectRegistro.put("fecmodificacion", varResultado.getString("fecmodificacion"));
+                varJsonObjectRegistro.put("sexo_id", varResultado.getString("sexo_id"));
                 varJsonArrayP.put(varJsonObjectRegistro);
             }
             Long varNumeroRegistros = Long.parseLong("0");
@@ -164,6 +170,85 @@ public class clsPersonaDao {
         }
         return varJsonObjectResultado;
     }
+    
+    public JSONObject ListId(String id) throws SQLException {
+        Connection varConexion = null;
+        ResultSet varResultado = null;
+        PreparedStatement varPst = null;
+
+        JSONArray varJsonArrayP = new JSONArray();
+        JSONObject varJsonObjectResultado = new JSONObject();
+        JSONObject varJsonObjectRegistro = new JSONObject();
+
+        try {
+            String varSql = "SELECT  x.id "
+                    + ", x.tipodocumento_cod "
+                    + ", x.numdocumento "
+                    + ", x.nombre "
+                    + ", x.apepaterno "
+                    + ", x.apematerno "
+                    + ", x.direccion "
+                    + ", x.email "
+                    + ", x.telefono "
+                    + ", x.observacion "
+                    + ", x.fecnacimiento "
+                    + ", x.estado "
+                    + ", x.usucreacion "
+                    + ", x.feccreacion "
+                    + ", x.usumodificacion "
+                    + ", x.fecmodificacion "
+                    + ", x.sexo_id "
+                    + " FROM sk_persona.persona as x where x.id = ?::bigint"
+                    + " ; ";
+
+            varConexion = varClsConexion.getConexion();
+
+            varPst = varConexion.prepareStatement(varSql);
+            varPst.setString(1, id);
+
+            varResultado = varPst.executeQuery();
+            while (varResultado.next()) {
+                varJsonObjectRegistro = new JSONObject();
+                varJsonObjectRegistro.put("id", varResultado.getString("id"));
+                varJsonObjectRegistro.put("tipodocumento_cod", varResultado.getString("tipodocumento_cod"));
+                varJsonObjectRegistro.put("numdocumento", varResultado.getString("numdocumento"));
+                varJsonObjectRegistro.put("nombre", varResultado.getString("nombre"));
+                varJsonObjectRegistro.put("apepaterno", varResultado.getString("apepaterno"));
+                varJsonObjectRegistro.put("apematerno", varResultado.getString("apematerno"));
+                varJsonObjectRegistro.put("direccion", varResultado.getString("direccion"));
+                varJsonObjectRegistro.put("email", varResultado.getString("email"));
+                varJsonObjectRegistro.put("telefono", varResultado.getString("telefono"));
+                varJsonObjectRegistro.put("observacion", varResultado.getString("observacion"));
+                varJsonObjectRegistro.put("fecnacimiento", varResultado.getString("fecnacimiento"));
+                varJsonObjectRegistro.put("estado", varResultado.getBoolean("estado"));
+                varJsonObjectRegistro.put("usucreacion", varResultado.getString("usucreacion"));
+                varJsonObjectRegistro.put("feccreacion", varResultado.getString("feccreacion"));
+                varJsonObjectRegistro.put("usumodificacion", varResultado.getString("usumodificacion"));
+                varJsonObjectRegistro.put("fecmodificacion", varResultado.getString("fecmodificacion"));
+                varJsonObjectRegistro.put("sexo_id", varResultado.getString("sexo_id"));
+                varJsonArrayP.put(varJsonObjectRegistro);
+            }
+
+            varJsonObjectResultado.put("Result", "OK");
+            varJsonObjectResultado.put("Records", varJsonArrayP);
+        } catch (Exception e) {
+            varJsonObjectResultado.put("Result", "ERROR");
+            varJsonObjectResultado.put("Message", e);
+            varJsonObjectResultado.put("numError", "-3");
+            e.printStackTrace();
+        } finally {
+            if (varConexion != null) {
+                varConexion.close();
+            }
+            if (varResultado != null) {
+                varResultado.close();
+            }
+            if (varPst != null) {
+                varPst.close();
+            }
+        }
+        return varJsonObjectResultado;
+    }    
 
     public JSONObject save(clsPersona varClass) throws SQLException {
 
@@ -175,8 +260,8 @@ public class clsPersonaDao {
         JSONObject varJsonObjectRegistro = new JSONObject();
         try {
             varConexion = varClsConexion.getConexion();
-            String sql = "INSERT INTO  sk_persona.persona (  tipodocumento_cod , numdocumento , nombre , apepaterno , apematerno , direccion , email , telefono , observacion , fecnacimiento , estado , usucreacion) values "
-                    + "( ? , ? , ? , ? , ? , ? , ? , ? , ? , cast(? as timestamp) , ? , ?)  RETURNING id  ; ";
+            String sql = "INSERT INTO  sk_persona.persona (  tipodocumento_cod , numdocumento , nombre , apepaterno , apematerno , direccion , email , telefono , observacion , fecnacimiento , estado , usucreacion, sexo_id) values "
+                    + "( ? , ? , ? , ? , ? , ? , ? , ? , ? , cast(? as timestamp) , ? , ?,?)  RETURNING id  ; ";
             varPst = varConexion.prepareStatement(sql);
 
             varPst.setString(1, varClass.getTipodocumento_cod());
@@ -191,6 +276,7 @@ public class clsPersonaDao {
             varPst.setString(10, clsSuper.metDateSqlString(varClass.getFecnacimiento()));
             varPst.setBoolean(11, varClass.getEstado());
             varPst.setInt(12, varClass.getUsucreacion());
+            varPst.setInt(13, varClass.getSexo_id());            
             varResultado = varPst.executeQuery();
             if (varResultado.next()) {
                 varJsonObjectRegistro.put("id", varResultado.getString("id"));
@@ -206,6 +292,7 @@ public class clsPersonaDao {
                 varJsonObjectRegistro.put("fecnacimiento", varClass.getFecnacimiento());
                 varJsonObjectRegistro.put("estado", varClass.getEstado());
                 varJsonObjectRegistro.put("usucreacion", varClass.getUsucreacion());
+                varJsonObjectRegistro.put("sexo_id", varClass.getSexo_id());                
             }
             varJsonObjectResultado.put("Result", "OK");
             varJsonObjectResultado.put("Record", varJsonObjectRegistro);
@@ -250,7 +337,8 @@ public class clsPersonaDao {
                     + "fecnacimiento = cast(? as timestamp) , "
                     + "estado = ? , "
                     + "usumodificacion = ? , "
-                    + "fecmodificacion = now()  "
+                    + "fecmodificacion = now() , "
+                    + "sexo_id = ?  "                    
                     + "WHERE id = ? ; ";
 
             varConexion = varClsConexion.getConexion();
@@ -267,7 +355,8 @@ public class clsPersonaDao {
             varPst.setString(10, clsSuper.metDateSqlString(varClass.getFecnacimiento()));
             varPst.setBoolean(11, varClass.getEstado());
             varPst.setInt(12, varClass.getUsumodificacion());
-            varPst.setLong(13, varClass.getId());
+            varPst.setLong(13, varClass.getSexo_id());                        
+            varPst.setLong(14, varClass.getId());
             varPst.executeUpdate();
 
             varJsonObjectRegistro.put("id", varClass.getId());
@@ -283,7 +372,7 @@ public class clsPersonaDao {
             varJsonObjectRegistro.put("fecnacimiento", varClass.getFecnacimiento());
             varJsonObjectRegistro.put("estado", varClass.getEstado());
             varJsonObjectRegistro.put("usumodificacion", varClass.getUsumodificacion());
-
+            varJsonObjectRegistro.put("sexo_id", varClass.getSexo_id());
             varJsonArrayP.put(varJsonObjectRegistro);
 
             varJsonObjectResultado.put("Result", "OK");

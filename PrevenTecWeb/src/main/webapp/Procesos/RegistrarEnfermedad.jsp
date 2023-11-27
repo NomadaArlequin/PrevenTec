@@ -137,6 +137,12 @@
                     success: function (data) {
                         var jsoncito = JSON.parse(data);
                         if (jsoncito.Result === "OK") {
+                            let Datos;
+                            $.each(jsoncito.Records, function (index, value) {
+                                Datos=value.enfermedad_nom+ "-"+value.probabilidad;
+                                //alert(value.enfermedad_nom+ "-"+value.probabilidad);
+                            });
+                            
                             alert("Se ingreso correctamente");
                         } else {
                             alert("" + jsoncito.Message);

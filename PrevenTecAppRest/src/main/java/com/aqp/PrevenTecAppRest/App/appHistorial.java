@@ -4,6 +4,7 @@
  */
 package com.aqp.PrevenTecAppRest.App;
 
+import com.aqp.PrevenTecAppRest.Config.clsDiagnosticoEnfermedadesValles;
 import com.aqp.PrevenTecAppRest.Entity.*;
 import com.aqp.PrevenTecAppRest.Controller.*;
 import com.aqp.PrevenTecAppRest.Config.clsSuper;
@@ -11,6 +12,7 @@ import com.aqp.PrevenTecAppRest.Config.clsSuper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -57,6 +59,18 @@ public class appHistorial {
             String varJson= varRequest.getParameter("varJson");
 
             varJObject = Historial_clinicoDao.save_pro(varClass,Historial_clinico,varJson);
+            
+            
+            if(varJObject.getString("Result").equals("OK")){                
+                Long codigo= varJObject.getLong("codigo");
+                clsDiagnosticoEnfermedadesValles clsDiagnosticoEnfermedadesValles= new clsDiagnosticoEnfermedadesValles();
+                JSONObject varJObjectEnfermedad = new JSONObject();
+                
+                varJObjectEnfermedad=clsDiagnosticoEnfermedadesValles.datosProbables(codigo);
+                JSONArray varJsonDiagnostico= varJObjectEnfermedad.getJSONArray("Records");
+                
+            }
+
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");
             varJObject.put("Message", "Error srv");

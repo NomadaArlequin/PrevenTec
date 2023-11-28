@@ -19,11 +19,11 @@ public class clsSuper {
         if (isWindows()) {
             return "C:/PrevenTec/";
         } else if (isMac()) {
-            return "/home/PrevenTec/";
+            return "/home/Arconte/PrevenTec/";
         } else if (isUnix()) {
-            return "/home/PrevenTec/";
+            return "/home/Arconte/PrevenTec/";
         } else if (isSolaris()) {
-            return "/home/PrevenTec/";
+            return "/home/Arconte/PrevenTec/";
         } else {
             return null;
         }

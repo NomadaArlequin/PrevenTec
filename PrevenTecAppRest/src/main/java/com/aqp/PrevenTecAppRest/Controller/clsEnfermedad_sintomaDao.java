@@ -142,13 +142,14 @@ public class clsEnfermedad_sintomaDao {
         JSONObject varJsonObjectRegistro = new JSONObject();
 
         try {
-            String varSql = "SELECT  x.id, x.enfermedad_id, x.sintoma_id, x.descripcion, x.estado, x.usucreacion, x.feccreacion, x.usumodificacion,"
+            String varSql = "SELECT  x.id, x.enfermedad_id, x.sintoma_id, x.descripcion, x.estado, x.usucreacion, x.feccreacion, x.usumodificacion, "
                     + " x.fecmodificacion FROM sk_general.enfermedad_sintoma as x "
                     + " where x.enfermedad_id = ? ;";
             varConexion = varClsConexion.getConexion();
             varPst = varConexion.prepareStatement(varSql);
             varPst.setInt(1, varEnfermedadId);
-            varPst.executeQuery();
+
+            varResultado = varPst.executeQuery();
 
             while (varResultado.next()) {
                 varJsonObjectRegistro = new JSONObject();
@@ -170,6 +171,7 @@ public class clsEnfermedad_sintomaDao {
             varJsonObjectResultado.put("Result", "ERROR");
             varJsonObjectResultado.put("Message", e);
             varJsonObjectResultado.put("numError", "-3");
+            e.printStackTrace();
         } finally {
             if (varConexion != null) {
                 varConexion.close();

@@ -137,9 +137,9 @@ public class clsCrearArchivoARFF {
 
                 if (!old.equals(nuevo)) {
                     if (primero == 1) {
+                        primero=0;
                     } else {
-
-                        fileWriter.write(enfermedad_sintoma + "," + data + "\n");
+                        fileWriter.write(enfermedad_sintoma + "," + old + "\n");
                     }
                     coma = "";
                     //enfermedad_sintoma="";

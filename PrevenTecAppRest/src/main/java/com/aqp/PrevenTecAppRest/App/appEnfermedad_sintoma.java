@@ -46,7 +46,7 @@ public class appEnfermedad_sintoma {
         clsEnfermedad_sintomaDao Enfermedad_sintomaDao = new clsEnfermedad_sintomaDao();
         JSONObject varJObject = new JSONObject();
         try {
-            Integer enfermedad = Integer.parseInt(varRequest.getParameter("enfermedad"));
+            Integer enfermedad = Integer.parseInt(varRequest.getParameter("enfermedad_id"));
             varJObject = Enfermedad_sintomaDao.ListByEnfermedad(enfermedad);
         } catch (Exception e) {
             varJObject.put("Result", "ERROR");

@@ -271,7 +271,7 @@
                 let letReturn = [];
                 $.ajax({
                     type: "GET",
-                    url: conGloURL + '/Enfermedad_sintoma?enfermedad_id=' + enfermedad_id,
+                    url: conGloURL + '/Enfermedad_sintoma/enfermedad?enfermedad_id=' + enfermedad_id,
                     async: false,
                     data: postData,
                     success: function (data) {

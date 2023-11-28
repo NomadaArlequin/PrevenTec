@@ -11,6 +11,17 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <%@include file="../WEB-INF/jspf/acceso.jspf" %>             
+
+        <style>
+
+            .contenedorCkb {
+                column-count: 2; /* Divide en dos columnas */
+                column-gap: 20px; /* Espacio entre las columnas */
+                /* Otros estilos opcionales */
+                padding: 10px;
+                border: 1px solid #ccc;
+            }
+        </style>
         <script type="text/javascript">
 
             const varOptSintoma = funGetOptSintomas();
@@ -139,11 +150,11 @@
                         if (jsoncito.Result === "OK") {
                             let Datos;
                             $.each(jsoncito.Records, function (index, value) {
-                                Datos=value.enfermedad_nom+ "-"+value.probabilidad;
+                                Datos = value.enfermedad_nom + "-" + value.probabilidad;
                                 //alert(value.enfermedad_nom+ "-"+value.probabilidad);
                             });
-                            
-                            alert("Se ingreso correctamente");
+
+                            alert("Se ingreso correctamente" + Datos);
                         } else {
                             alert("" + jsoncito.Message);
                         }
@@ -352,11 +363,12 @@
                 <div class="col-md-6 col-6">
                     <label for="txtObservacion" class="col-form-label">Observacion</label>                    
                     <input id="txtObservacion" type="text" class="form-control input-sm "  title="" placeholder="">
-                </div>                                
-                <div id="EnfermedadesGroup">
-
+                </div>          
+                <br>
+                <div class="contenedorCkb">
+                    <div id="EnfermedadesGroup" class="columnaCkb"></div>                    
                 </div>
-
+                <br>
 
                 <div class="col-md-3">
                     <label for="txtLatitud" class="col-form-label">Latitud</label>
@@ -367,12 +379,16 @@
                     <input id="txtLongitud" type="text" class="form-control input-sm number " value="" placeholder="" title="" disabled>
                 </div>
 
+
+            </div>    
+            <div class="row">
+                <div class="col-md-10"></div>
                 <div class="col-md-1">
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-dark" onclick="funGuardar()">Buscar</button>    
+                        <button type="button" class="btn btn-dark" onclick="funGuardar()">Guardar</button>    
                     </div>             
-                </div>                
-            </div>    
+                </div> 
+            </div>
 
 
 
